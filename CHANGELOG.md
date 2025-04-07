@@ -10,3 +10,9 @@ All notable changes to the BeeBot project will be documented in this file.
 - Component requirements defined
 - Basic motor control functionality planned
 - Initial wiring diagram concept
+
+
+## [0.1.1] - 2025-04-07
+
+### Added
+- Step 1 (simple one button testing)

@@ -1,10 +1,8 @@
-# Arduino Bee-Bot Project
+# Arduino + Lego Bee-Bot Project
 
 This project aims to replicate the basic functionality of a Bee-Bot robot using an Arduino microcontroller.
 
-## Phase 1: Basic Functionality (Button Input)
-
-### 1.1 Project Goals
+## Project Goals
 
 * Implement basic movement commands:
     * Forward
@@ -17,7 +15,9 @@ This project aims to replicate the basic functionality of a Bee-Bot robot using 
     * Start Program (execute command sequence)
 * No sensors will be used in this initial phase.
 
-### Components Required
+![Lego + Arduino Bee-Bot](assets/beebot.jpg)
+
+## Components Required
 
 * Arduino Uno
 * Lego DC Motors (2) with Wheels
@@ -27,7 +27,7 @@ This project aims to replicate the basic functionality of a Bee-Bot robot using 
 * Jumper Wires
 * Breadboard
 
-### Button Assignments
+## Button Assignments
 
 * **Forward:** Moves the Bee-Bot forward.
 * **Backward:** Moves the Bee-Bot backward.
@@ -36,7 +36,7 @@ This project aims to replicate the basic functionality of a Bee-Bot robot using 
 * **Clear Program:** Resets the stored command sequence.
 * **Start Program:** Executes the stored command sequence.
 
-### Phases
+## Incremental development in 4 steps:
 
 1.  **One button:**
     * Connect a button to pin 2 to control internal led.
@@ -53,7 +53,7 @@ This project aims to replicate the basic functionality of a Bee-Bot robot using 
     * Test a circuit like program
     * Let the kids have fun !
 
-### Wiring Diagram
+## Wiring Diagram
 
 ```
 Arduino Uno                TB6612FNG Motor Driver
@@ -84,7 +84,7 @@ Power Connections:
 
 ```
 
-### Future work / ideas
+## Future work / ideas
 
-* Add a camera and use COCO SSD[https://github.com/tensorflow/tfjs-models/blob/master/coco-ssd] to find a person in a frame and control motors to follow it
-* Add microfone and Speach Commands[https://github.com/tensorflow/tfjs-models/blob/master/speech-commands] to control the BeeBot via voice commands
+* Add a camera and use [COCO SSD](https://github.com/tensorflow/tfjs-models/blob/master/coco-ssd) to find a person in a frame and control motors to follow it
+* Add microphone and [Speech Commands](https://github.com/tensorflow/tfjs-models/blob/master/speech-commands) to control the BeeBot via voice commands
