@@ -70,12 +70,12 @@ Arduino Uno                TB6612FNG Motor Driver
 |      A5 |----- BIN2 ---|  BIN2           |
 |         |              +-----------------+
 |         |
-|      D2 |----- Forward Button    ---> GND
-|      D3 |----- Backward Button   ---> GND
-|      D4 |----- Left Turn Button  ---> GND
-|      D5 |----- Right Turn Button ---> GND
-|      D6 |----- Clear Button      ---> GND
-|      D7 |----- Start Button      ---> GND
+|      D2 |----- Start Button      ---> GND
+|      D3 |----- Clear Button      ---> GND
+|      D4 |----- Forward button    ---> GND
+|      D5 |----- Left Button       ---> GND
+|      D6 |----- Right Button      ---> GND
+|      D7 |----- Back Button       ---> GND
 +---------+
 
 Power Connections:

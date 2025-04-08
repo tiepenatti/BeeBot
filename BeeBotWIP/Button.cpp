@@ -4,6 +4,10 @@ Button::Button(int pin) : _pin(pin), _state(HIGH), _lastState(HIGH), _lastDeboun
     pinMode(_pin, INPUT_PULLUP);
 }
 
+bool Button::isPressed() {
+    return digitalRead(_pin) == LOW;  // Since we're using INPUT_PULLUP, LOW means pressed
+}
+
 bool Button::isReleased(unsigned long debounceDelay) {
     int reading = digitalRead(_pin);
     unsigned long currentTime = millis();
