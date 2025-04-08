@@ -57,25 +57,25 @@ This project aims to replicate the basic functionality of a Bee-Bot robot using 
 
 ```
 Arduino Uno                TB6612FNG Motor Driver
-+---------+               +------------------+
++---------+              +------------------+
 |         |      VM  ----|  VM         AO1 |----- Motor1 +
 |     5V  |----- VCC ----|  VCC        AO2 |----- Motor1 -
 |    GND  |----- GND ----|  GND        BO1 |----- Motor2 +
 |         |              |             BO2 |----- Motor2 -
-|      D4 |----- PWMA ---|  PWMA       STBY|----- 5V
-|      D5 |----- AIN1 ---|  AIN1           |
-|      D6 |----- AIN2 ---|  AIN2           |
-|      D7 |----- PWMB ---|  PWMB           |
-|      D8 |----- BIN1 ---|  BIN1           |
-|      D9 |----- BIN2 ---|  BIN2           |
-|         |               +-----------------+
+|      A0 |----- PWMA ---|  PWMA       STBY|----- 5V
+|      A1 |----- AIN1 ---|  AIN1           |
+|      A2 |----- AIN2 ---|  AIN2           |
+|      A3 |----- PWMB ---|  PWMB           |
+|      A4 |----- BIN1 ---|  BIN1           |
+|      A5 |----- BIN2 ---|  BIN2           |
+|         |              +-----------------+
 |         |
 |      D2 |----- Forward Button    ---> GND
 |      D3 |----- Backward Button   ---> GND
-|     D10 |----- Left Turn Button  ---> GND
-|     D11 |----- Right Turn Button ---> GND
-|     D12 |----- Clear Button      ---> GND
-|     D13 |----- Start Button      ---> GND
+|      D4 |----- Left Turn Button  ---> GND
+|      D5 |----- Right Turn Button ---> GND
+|      D6 |----- Clear Button      ---> GND
+|      D7 |----- Start Button      ---> GND
 +---------+
 
 Power Connections:
