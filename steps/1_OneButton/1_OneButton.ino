@@ -13,6 +13,8 @@
 - GND: Connect to other terminal of button
 */
 
+#include <Arduino.h>
+
 const int BUTTON_PIN = 2;
 const int LED_PIN = LED_BUILTIN; // Internal LED pin (13 on most Arduinos)
 
@@ -21,29 +23,29 @@ int lastButtonState = buttonState;
 int ledState = LOW;
 
 void setup() {
-  // setup pins and modes
-  pinMode(BUTTON_PIN, INPUT_PULLUP); // Button input with internal pull-up resistor
-  pinMode(LED_PIN, OUTPUT); // allows to use the internal led as output
+    // setup pins and modes
+    pinMode(BUTTON_PIN, INPUT_PULLUP); // Button input with internal pull-up resistor
+    pinMode(LED_PIN, OUTPUT); // allows to use the internal led as output
 
-  // setup initial state
-  digitalWrite(LED_PIN, ledState);
+    // setup initial state
+    digitalWrite(LED_PIN, ledState);
 }
 
 void loop() {
-  lastButtonState = checkButtonState();
+    lastButtonState = checkButtonState();
 }
 
 int checkButtonState() {
-  buttonState = digitalRead(BUTTON_PIN);
+    buttonState = digitalRead(BUTTON_PIN);
 
-  if (lastButtonState == LOW && buttonState == HIGH) {
-    ledState = !ledState;
-    digitalWrite(LED_PIN, ledState);
-    debounceDelay();
-  }
-  return buttonState;
+    if (lastButtonState == LOW && buttonState == HIGH) {
+        ledState = !ledState;
+        digitalWrite(LED_PIN, ledState);
+        debounceDelay();
+    }
+    return buttonState;
 }
 
 void debounceDelay() {
-  delay(50);
+    delay(50);
 }
