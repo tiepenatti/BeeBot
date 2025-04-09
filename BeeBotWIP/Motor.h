@@ -9,6 +9,7 @@ public:
     void run(int speed = FULL_SPEED);
     void reverse(int speed = FULL_SPEED);
     void stop();
+    void brake();
     void toggle();
     bool isRunning();
 

@@ -8,12 +8,12 @@ Arduino Uno                TB6612FNG Motor Driver
 |     5V  |----- VCC ----|  VCC        AO2 |----- Motor1 -
 |    GND  |----- GND ----|  GND        BO1 |----- Motor2 +
 |         |              |             BO2 |----- Motor2 -
-|      A0 |----- PWMA ---|  PWMA       STBY|----- 5V
-|      A1 |----- AIN1 ---|  AIN1           |
-|      A2 |----- AIN2 ---|  AIN2           |
-|      A3 |----- PWMB ---|  PWMB           |
-|      A4 |----- BIN1 ---|  BIN1           |
-|      A5 |----- BIN2 ---|  BIN2           |
+|      A0 |--------------|  PWMA       STBY|----- 5V
+|      A1 |--------------|  AIN2           |
+|      A2 |--------------|  AIN1           |
+|      A3 |--------------|  BIN1           |
+|      A4 |--------------|  BIN2           |
+|      A5 |--------------|  PWMB           |
 |         |              +-----------------+
 |         |
 |      D2 |----- Start Button      ---> GND
@@ -34,11 +34,11 @@ Power Connections:
 #include "MotorDriver.h"
 
 const int MOTOR_PWMA = A0;
-const int MOTOR_AIN1 = A1;
-const int MOTOR_AIN2 = A2;
-const int MOTOR_PWMB = A3;
-const int MOTOR_BIN1 = A4;
-const int MOTOR_BIN2 = A5;
+const int MOTOR_AIN2 = A1;
+const int MOTOR_AIN1 = A2;
+const int MOTOR_BIN1 = A3;
+const int MOTOR_BIN2 = A4;
+const int MOTOR_PWMB = A5;
 
 const int BUTTON_START_PIN = 2;
 const int BUTTON_CLEAR_PIN = 3;
@@ -54,45 +54,66 @@ Button btnLeft(BUTTON_LEFT_PIN);
 Button btnRight(BUTTON_RIGHT_PIN);
 Button btnBack(BUTTON_BACK_PIN);
 
-// MotorDriver motors(MOTOR_PWMA, MOTOR_AIN1, MOTOR_AIN2, MOTOR_PWMB, MOTOR_BIN1, MOTOR_BIN2); // keep this commented out for now, until testied buttons wiring
+ MotorDriver motors(MOTOR_PWMA, MOTOR_AIN1, MOTOR_AIN2, MOTOR_PWMB, MOTOR_BIN1, MOTOR_BIN2);
 
 void setup() {
+    Serial.begin(9600);
+    while (!Serial) {
+        ; // Wait for serial port to connect. Needed for native USB port only
+    }
+    Serial.println("BeeBot Test");
+    Serial.println("initializing motors...");
+
     // Initialize both motors in stopped state
-    // motors.begin();
+    motors.begin();
 
     pinMode(LED_BUILTIN, OUTPUT);
-    Serial.begin(9600);
-    Serial.println("BeeBot Button Test");
     Serial.println("Waiting for button presses...");
 }
 
 void loop() {
     bool anyButtonPressed = false;
-    
+    uint8_t speed = 16;
+
     // Check each button and print debug info if pressed
     if (btnStart.isPressed()) {
         Serial.println("Start button is pressed!");
-        anyButtonPressed = true;
+        // anyButtonPressed = true;
+        if (speed < 128) {
+            speed = speed << 1;
+        }
     }
     if (btnClear.isPressed()) {
         Serial.println("Clear button is pressed!");
-        anyButtonPressed = true;
+        // anyButtonPressed = true;
+        if (speed > 2) {
+            speed = speed >> 1;
+        }
     }
     if (btnForward.isPressed()) {
         Serial.println("Forward button is pressed!");
         anyButtonPressed = true;
+        motors.forward(speed);
     }
     if (btnLeft.isPressed()) {
         Serial.println("Left button is pressed!");
         anyButtonPressed = true;
+        motors.left(speed);
     }
     if (btnRight.isPressed()) {
         Serial.println("Right button is pressed!");
         anyButtonPressed = true;
+        motors.right(speed);
     }
     if (btnBack.isPressed()) {
         Serial.println("Back button is pressed!");
         anyButtonPressed = true;
+        motors.backward(speed);
+    }
+    
+    if (!anyButtonPressed) {
+        Serial.println("Motors stopping!");
+        motors.stop();
     }
 
     // Control LED based on any button being pressed

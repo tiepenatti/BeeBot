@@ -32,6 +32,13 @@ void Motor::stop() {
     _runningSpeed = 0;
 }
 
+void Motor::brake() {
+    digitalWrite(_in1Pin, HIGH);
+    digitalWrite(_in2Pin, HIGH);
+    analogWrite(_pwmPin, 0);
+    _runningSpeed = 0;
+}
+
 bool Motor::isRunning() {
     return _runningSpeed != 0;
 }

@@ -17,7 +17,10 @@ public:
     void begin();
     void forward(uint8_t speed = FULL_SPEED);
     void backward(uint8_t speed = FULL_SPEED);
+    void right(uint8_t speed = FULL_SPEED);
+    void left(uint8_t speed = FULL_SPEED);
     void stop();
+    void brake();
 };
 
 #endif

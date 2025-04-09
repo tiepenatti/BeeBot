@@ -20,7 +20,22 @@ void MotorDriver::backward(uint8_t speed) {
     motorB.reverse(speed);
 }
 
+void MotorDriver::right(uint8_t speed) {
+    motorA.run(speed);
+    motorB.reverse(speed);
+}
+
+void MotorDriver::left(uint8_t speed) {
+    motorA.reverse(speed);
+    motorB.run(speed);
+}
+
 void MotorDriver::stop() {
     motorA.stop();
     motorB.stop();
+}
+
+void MotorDriver::brake() {
+    motorA.brake();
+    motorB.brake();
 }
