@@ -21,6 +21,7 @@ public:
     void left(uint8_t speed = FULL_SPEED);
     void stop();
     void brake();
+    bool isMoving();
 };
 
 #endif

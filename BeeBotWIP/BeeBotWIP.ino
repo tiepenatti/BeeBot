@@ -47,6 +47,9 @@ const int BUTTON_LEFT_PIN = 5;
 const int BUTTON_RIGHT_PIN = 6;
 const int BUTTON_BACK_PIN = 7;
 
+const int SPEED_STEPS = 16;
+const int FULL_SPEED = 255;
+
 Button btnStart(BUTTON_START_PIN);
 Button btnClear(BUTTON_CLEAR_PIN);
 Button btnForward(BUTTON_FORWARD_PIN);
@@ -54,7 +57,7 @@ Button btnLeft(BUTTON_LEFT_PIN);
 Button btnRight(BUTTON_RIGHT_PIN);
 Button btnBack(BUTTON_BACK_PIN);
 
- MotorDriver motors(MOTOR_PWMA, MOTOR_AIN1, MOTOR_AIN2, MOTOR_PWMB, MOTOR_BIN1, MOTOR_BIN2);
+MotorDriver motors(MOTOR_PWMA, MOTOR_AIN1, MOTOR_AIN2, MOTOR_PWMB, MOTOR_BIN1, MOTOR_BIN2);
 
 void setup() {
     Serial.begin(9600);
@@ -71,24 +74,22 @@ void setup() {
     Serial.println("Waiting for button presses...");
 }
 
+uint8_t speed = 16;
 void loop() {
     bool anyButtonPressed = false;
-    uint8_t speed = 16;
 
     // Check each button and print debug info if pressed
     if (btnStart.isPressed()) {
-        Serial.println("Start button is pressed!");
-        // anyButtonPressed = true;
-        if (speed < 128) {
-            speed = speed << 1;
+        if (speed < (FULL_SPEED - SPEED_STEPS)) {
+            speed += SPEED_STEPS;
         }
+        Serial.println("Start button is pressed. Current speed is " + String(speed));
     }
     if (btnClear.isPressed()) {
-        Serial.println("Clear button is pressed!");
-        // anyButtonPressed = true;
-        if (speed > 2) {
-            speed = speed >> 1;
+        if (speed > SPEED_STEPS) {
+            speed -= SPEED_STEPS;
         }
+        Serial.println("Clear button is pressed. Current speed is " + String(speed));
     }
     if (btnForward.isPressed()) {
         Serial.println("Forward button is pressed!");
@@ -111,7 +112,7 @@ void loop() {
         motors.backward(speed);
     }
     
-    if (!anyButtonPressed) {
+    if (!anyButtonPressed && motors.isMoving()) {
         Serial.println("Motors stopping!");
         motors.stop();
     }

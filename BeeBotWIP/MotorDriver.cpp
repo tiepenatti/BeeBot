@@ -39,3 +39,7 @@ void MotorDriver::brake() {
     motorA.brake();
     motorB.brake();
 }
+
+bool MotorDriver::isMoving() {
+    return motorA.isRunning() || motorB.isRunning();
+}
