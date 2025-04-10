@@ -1,6 +1,6 @@
 # Arduino + Lego Bee-Bot Project
 
-This project aims to replicate the basic functionality of a Bee-Bot robot using an Arduino microcontroller.
+This project aims to replicate the basic functionality of a Bee-Bot robot using an Arduino microcontroller. A Bee-Bot is a small, programmable, floor robot designed primarily for young children (typically ages 3-7) to introduce them to basic coding concepts.
 
 ## Project Goals
 
@@ -36,46 +36,47 @@ This project aims to replicate the basic functionality of a Bee-Bot robot using 
 * **Clear Program:** Resets the stored command sequence.
 * **Start Program:** Executes the stored command sequence.
 
-## Incremental development in 4 steps:
+### Incremental development in 4 steps:
 
 1.  **One button:**
-    * Connect a button to pin 2 to control internal led.
+    * Connect a pull-up button to pin 2 to control internal led.
 2.  **One motor:**
     * Connect a motor to the motor driver.
     * Connect the motor driver to the Arduino.
     * Connect one push button to control the motor.
 3.  **Two motors:**
-    * Connect arduino to lego chasis with 2 motors and one free wheel, using the motor driver, and two buttons to turn on/off each motor
+    * Connect arduino to lego chasis with 2 motors and one free wheel, using the motor driver, and the 6 buttons, using the directional ones to control the motors and the other 2 to control the motor speed
 4.  **Full BeeBot:**
-    * Add all 6 buttons
-    * Implement storing logic and sequencing
-    * Test parameters like time and current required for a 90 degree turn
-    * Test a circuit like program
+    * Implement storing commands and sequencing
+    * Test parameters like time and speed required for a 90 degree turn
     * Let the kids have fun !
 
 ## Wiring Diagram
 
 ```
+
 Arduino Uno                TB6612FNG Motor Driver
 +---------+              +------------------+
 |         |      VM  ----|  VM         AO1 |----- Motor1 +
-|     5V  |----- VCC ----|  VCC        AO2 |----- Motor1 -
-|    GND  |----- GND ----|  GND        BO1 |----- Motor2 +
-|         |              |             BO2 |----- Motor2 -
-|      A0 |----- PWMA ---|  PWMA       STBY|----- 5V
-|      A1 |----- AIN1 ---|  AIN1           |
-|      A2 |----- AIN2 ---|  AIN2           |
-|      A3 |----- PWMB ---|  PWMB           |
-|      A4 |----- BIN1 ---|  BIN1           |
-|      A5 |----- BIN2 ---|  BIN2           |
+|     5V  |------.-------|  VCC        AO2 |----- Motor1 -
+|         |       \------|  STBY       BO1 |----- Motor2 +
+|    GND  |-----------.--|  GND        BO2 |----- Motor2 -
+|         |   GNDM---/   |                 |
+|         |              |                 |
+|      A0 |--------------|  PWMA           |
+|      A1 |--------------|  AIN2           |
+|      A2 |--------------|  AIN1           |
+|      A3 |--------------|  BIN1           |
+|      A4 |--------------|  BIN2           |
+|      A5 |--------------|  PWMB           |
 |         |              +-----------------+
 |         |
-|      D2 |----- Start Button      ---> GND
-|      D3 |----- Clear Button      ---> GND
-|      D4 |----- Forward button    ---> GND
-|      D5 |----- Left Button       ---> GND
-|      D6 |----- Right Button      ---> GND
-|      D7 |----- Back Button       ---> GND
+|      D2 |----- [Start Button] --------> GND
+|      D3 |----- [Clear Button] --------> GND
+|      D4 |----- [Forward button] ------> GND
+|      D5 |----- [Left Button] ---------> GND
+|      D6 |----- [Right Button] --------> GND
+|      D7 |----- [Back Button] ---------> GND
 +---------+
 
 Power Connections:
