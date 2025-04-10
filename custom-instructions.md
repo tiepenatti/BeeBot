@@ -7,6 +7,7 @@
 - Add comments for complex logic, avoid overcommenting
 - Keep functions small and focused
 - Use consistent indentation (4 spaces)
+- Lines with only spaces should be cleaned to be empty
 - Define constants for pin numbers at the top of the file in UPPER_CASE
 
 ### Version Control

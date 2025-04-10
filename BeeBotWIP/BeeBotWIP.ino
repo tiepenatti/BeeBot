@@ -30,9 +30,11 @@ Power Connections:
 
 */
 
-#include "Button.h"
-#include "MotorDriver.h"
+#include <Arduino.h>
+#include "Debug.h"
+#include "BeeBot.h"
 
+// Pin definitions
 const int MOTOR_PWMA = A0;
 const int MOTOR_AIN2 = A1;
 const int MOTOR_AIN1 = A2;
@@ -47,79 +49,25 @@ const int BUTTON_LEFT_PIN = 5;
 const int BUTTON_RIGHT_PIN = 6;
 const int BUTTON_BACK_PIN = 7;
 
-const int SPEED_STEPS = 16;
-const int FULL_SPEED = 255;
-
-Button btnStart(BUTTON_START_PIN);
-Button btnClear(BUTTON_CLEAR_PIN);
-Button btnForward(BUTTON_FORWARD_PIN);
-Button btnLeft(BUTTON_LEFT_PIN);
-Button btnRight(BUTTON_RIGHT_PIN);
-Button btnBack(BUTTON_BACK_PIN);
-
-MotorDriver motors(MOTOR_PWMA, MOTOR_AIN1, MOTOR_AIN2, MOTOR_PWMB, MOTOR_BIN1, MOTOR_BIN2);
+BeeBot beeBot(MOTOR_PWMA, MOTOR_AIN1, MOTOR_AIN2,
+              MOTOR_PWMB, MOTOR_BIN1, MOTOR_BIN2,
+              BUTTON_START_PIN, BUTTON_CLEAR_PIN,
+              BUTTON_FORWARD_PIN, BUTTON_LEFT_PIN,
+              BUTTON_RIGHT_PIN, BUTTON_BACK_PIN);
 
 void setup() {
-    Serial.begin(9600);
+    DEBUG_BEGIN(9600);
+    #ifdef DEBUG
     while (!Serial) {
         ; // Wait for serial port to connect. Needed for native USB port only
     }
-    Serial.println("BeeBot Test");
-    Serial.println("initializing motors...");
+    #endif
 
-    // Initialize both motors in stopped state
-    motors.begin();
-
-    pinMode(LED_BUILTIN, OUTPUT);
-    Serial.println("Waiting for button presses...");
+    DEBUG_PRINTLN("BeeBot Test");
+    beeBot.begin();
 }
 
-uint8_t speed = 16;
 void loop() {
-    bool anyButtonPressed = false;
-
-    // Check each button and print debug info if pressed
-    if (btnStart.isPressed()) {
-        if (speed < (FULL_SPEED - SPEED_STEPS)) {
-            speed += SPEED_STEPS;
-        }
-        Serial.println("Start button is pressed. Current speed is " + String(speed));
-    }
-    if (btnClear.isPressed()) {
-        if (speed > SPEED_STEPS) {
-            speed -= SPEED_STEPS;
-        }
-        Serial.println("Clear button is pressed. Current speed is " + String(speed));
-    }
-    if (btnForward.isPressed()) {
-        Serial.println("Forward button is pressed!");
-        anyButtonPressed = true;
-        motors.forward(speed);
-    }
-    if (btnLeft.isPressed()) {
-        Serial.println("Left button is pressed!");
-        anyButtonPressed = true;
-        motors.left(speed);
-    }
-    if (btnRight.isPressed()) {
-        Serial.println("Right button is pressed!");
-        anyButtonPressed = true;
-        motors.right(speed);
-    }
-    if (btnBack.isPressed()) {
-        Serial.println("Back button is pressed!");
-        anyButtonPressed = true;
-        motors.backward(speed);
-    }
-    
-    if (!anyButtonPressed && motors.isMoving()) {
-        Serial.println("Motors stopping!");
-        motors.stop();
-    }
-
-    // Control LED based on any button being pressed
-    digitalWrite(LED_BUILTIN, anyButtonPressed ? HIGH : LOW);
-    
-    // Small delay to avoid flooding the serial monitor
+    beeBot.update();
     delay(100);
 }
