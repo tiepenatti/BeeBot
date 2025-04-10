@@ -8,6 +8,7 @@ public:
     Button(int pin);
     bool isReleased(unsigned long debounceDelay = 50); // true after releasing a button that was pressesd
     bool isPressed(); // true if button is currently pressed
+    int getPin() const { return _pin; }
 
 private:
     int _pin;

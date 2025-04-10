@@ -1,5 +1,7 @@
 #include "BeeBot.h"
 
+BeeBot* BeeBot::instance = nullptr; // Store instance for interrupt handler
+
 BeeBot::BeeBot(uint8_t pwmA, uint8_t ain1, uint8_t ain2,
                uint8_t pwmB, uint8_t bin1, uint8_t bin2,
                uint8_t startPin, uint8_t clearPin,
@@ -14,12 +16,17 @@ BeeBot::BeeBot(uint8_t pwmA, uint8_t ain1, uint8_t ain2,
     , motors(pwmA, ain1, ain2, pwmB, bin1, bin2)
     , commandCount(0)
     , isExecuting(false) {
+    instance = this;
 }
 
 void BeeBot::begin() {
     motors.begin();
     clearCommands();
     pinMode(LED_BUILTIN, OUTPUT);
+
+    // Set up interrupt for clear button using the pin from btnClear
+    attachInterrupt(digitalPinToInterrupt(btnClear.getPin()), handleClearInterrupt, FALLING);
+
     DEBUG_PRINTLN("BeeBot initialized and ready!");
 }
 
@@ -68,23 +75,31 @@ void BeeBot::executeCommands() {
                 delay(TURN_DURATION);
                 break;
         }
+        
         motors.stop();
         delay(PAUSE_DURATION);
     }
 
-    isExecuting = false;
     DEBUG_PRINTLN("Command execution complete!");
+    isExecuting = false;
+}
+
+void BeeBot::handleClearInterrupt() {
+    if (instance != nullptr) {
+        instance->emergencyStop();
+    }
+}
+
+void BeeBot::emergencyStop() {
+    motors.stop();
+    clearCommands();
+    DEBUG_PRINTLN("Emergency stop triggered!");
 }
 
 void BeeBot::update() {
-    if (btnStart.isReleased()) {
-        if (!isExecuting) {
-            executeCommands();
-        }
-    }
-
-    if (btnClear.isReleased()) {
-        clearCommands();
+    if (btnStart.isReleased() && !isExecuting) {
+        DEBUG_PRINTLN("Start button pressed!");
+        executeCommands();
     }
 
     if (btnForward.isReleased() && !isExecuting) {
@@ -106,5 +121,4 @@ void BeeBot::update() {
         DEBUG_PRINTLN("Backward command added!");
         addCommand(CMD_BACKWARD);
     }
-
 }

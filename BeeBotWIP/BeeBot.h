@@ -20,18 +20,20 @@ private:
     static const int MAX_COMMANDS = 40;
     Command commands[MAX_COMMANDS];
     int commandCount;
-    bool isExecuting;
+    volatile bool isExecuting;  // volatile since it's modified in interrupt
 
-    // Command execution parameters (time in ms, speed in 0-255 range)
-    static const int MOVE_DURATION = 1000;
-    static const int TURN_DURATION = 750;
-    static const int PAUSE_DURATION = 500;
-    static const uint8_t MOVE_SPEED = 200;
-    static const uint8_t TURN_SPEED = 160;
+    // Command execution parameters
+    static const int MOVE_DURATION = 1000;   // Time for forward/backward movement in ms
+    static const int TURN_DURATION = 750;    // Time for left/right turns in ms
+    static const int PAUSE_DURATION = 500;   // Time to pause between commands in ms
+    static const uint8_t MOVE_SPEED = 200;  // Speed for forward/backward movement (0-255)
+    static const uint8_t TURN_SPEED = 160;  // Speed for turning (0-255)
 
     void addCommand(Command cmd);
     void executeCommands();
     void clearCommands();
+
+    static BeeBot* instance;  // Needed for interrupt handling
 
 public:
     BeeBot(uint8_t pwmA, uint8_t ain1, uint8_t ain2, 
@@ -39,9 +41,13 @@ public:
            uint8_t startPin, uint8_t clearPin,
            uint8_t forwardPin, uint8_t leftPin,
            uint8_t rightPin, uint8_t backPin);
-
+    
     void begin();
     void update();  // Called in loop to handle button presses and commands
+    
+    // Interrupt handler
+    static void handleClearInterrupt();
+    void emergencyStop();
 };
 
 #endif
