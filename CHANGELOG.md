@@ -22,3 +22,7 @@ All notable changes to the BeeBot project will be documented in this file.
 ### Added
 - Step 2 (Add motor driver and one motor with button to control it's state)
 
+## [0.1.3] - 2025-04-10
+
+### Added
+- Step 3 (Motor driver with two motors and the 6 buttons for testing movements and turns, speed and duration)
