@@ -50,33 +50,38 @@ This project aims to replicate the basic functionality of a Bee-Bot robot using 
     * Implement storing commands and sequencing
     * Test parameters like time and speed required for a 90 degree turn
     * Let the kids have fun !
+5.  **Full BeeBot (new motor driver):**
+    * Update code to use [L298NH shield](https://www.diymore.cc/products/replace-l298p-for-arduino-uno-r3-dual-channel-dc-motor-driver-shield-expansion-board-l298nh-module-driving-module-mega2560-one)
+    * Let the fun continue
 
 ## Wiring Diagram
 
 ```
 
-Arduino Uno                TB6612FNG Motor Driver
+Arduino Uno                L298NH Motor Driver Shield (diymore)
 +---------+              +------------------+
-|         |      VM  ----|  VM         AO1 |----- Motor1 +
-|     5V  |------.-------|  VCC        AO2 |----- Motor1 -
-|         |       \------|  STBY       BO1 |----- Motor2 +
-|    GND  |-----------.--|  GND        BO2 |----- Motor2 -
-|         |   GNDM---/   |                 |
-|         |              |                 |
-|      A0 |--------------|  PWMA           |
-|      A1 |--------------|  AIN2           |
-|      A2 |--------------|  AIN1           |
-|      A3 |--------------|  BIN1           |
-|      A4 |--------------|  BIN2           |
-|      A5 |--------------|  PWMB           |
+|         |              |                  |
+|     5V  |--------------|  5V         OUT1 |----- Motor1 +
+|    3.3V |              |             OUT2 |----- Motor1 -
+|    GND  |--------------|  GND        OUT3 |----- Motor2 +
+|         |              |             OUT4 |----- Motor2 -
+|         |              |                  |
+|     D12 |--------------|  Motor A Dir     | 
+|     D13 |--------------|  Motor B Dir     |
+|      D3 |--------------|  PWMA            |
+|     D11 |--------------|  PWMB            |
+|      D9 |--------------|  Break A         |
+|      D8 |--------------|  Break B         |
+|      A0 |--------------|  Current Sense A |  (not used)
+|      A1 |--------------|  Current Sense B |  (not used)
 |         |              +-----------------+
 |         |
-|      D2 |----- [Start Button] --------> GND
-|      D3 |----- [Clear Button] --------> GND
-|      D4 |----- [Forward button] ------> GND
-|      D5 |----- [Left Button] ---------> GND
-|      D6 |----- [Right Button] --------> GND
-|      D7 |----- [Back Button] ---------> GND
+|      D2 |----- [ Start Button   ]---> GND
+|      D4 |----- [ Clear Button   ]---> GND
+|      D5 |----- [ Forward Button ]---> GND
+|      D6 |----- [ Left Button    ]---> GND
+|      D7 |----- [ Right Button   ]---> GND
+|     D10 |----- [ Back Button    ]---> GND
 +---------+
 
 Power Connections:

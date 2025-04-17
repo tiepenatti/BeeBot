@@ -32,3 +32,8 @@ All notable changes to the BeeBot project will be documented in this file.
 
 ### Added
 - Step 4 (Full Bee-Bot)
+
+## [0.1.5] - 2025-04-17
+
+### Added
+- Step 5 (Full Bee-Bot with a different motor controller)
